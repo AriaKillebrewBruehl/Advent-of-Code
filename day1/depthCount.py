@@ -9,7 +9,7 @@ def getIncreases():
     while i < len(depths):
         previous = depths[i - 1]
         current = depths[i]
-        if (int(previous) - int(current)) < 0:
+        if int(previous) < int(current):
             increases += 1
         i += 1
 
