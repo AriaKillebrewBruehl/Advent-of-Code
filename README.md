@@ -1,6 +1,6 @@
 # Advent-of-Code :christmas_tree: :gift:
 
-Advent-of-code challenge created by Eric Wastl. More info [https://adventofcode.com/2021/about](here)!
+[https://adventofcode.com/2021/about](Advent-of-code) challenge created by Eric Wastl!
 
 | :spiral_calendar: day| part :one: | part :two: |
 |----------------------|------------|------------|
