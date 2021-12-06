@@ -1,8 +1,10 @@
 def parseInput():
     f = open('input.txt', 'r')
     nums = f.read().split()
-    order = nums[0].split(',')
+    order = nums[0].split(',') # create list of the numbers to be called
     nums = nums[1:] # remove first element
+    # create list of boards where each board is represented as a list
+    # where each entry of said list is a list that represents a row
     boards = []
     i = 0
     while i < len(nums):
@@ -16,29 +18,32 @@ def parseInput():
         boards.append(board)
     return order, boards
 
-def winRow(row):
-    sum = 0
-    for col in row:
-        sum += int(col)
-    if sum == -5:   return True
-    else:           return False
 
-def winCol(board, i):
-    sum = 0
+# see if a board has a winning row by computing the sum of each
+# row, if any sum is -5, then all the entries have been marked off
+def winRow(board):
     for row in board:
-        sum += int(row[i])
-    if sum == -5:   return True
-    else:           return False
-
-def hasWin(board):
-    for row in board:
-        if winRow(row):
-            return True
-    for i in range(len(board)):
-        if winCol(board, i):
-            return True
+        sum = 0
+        for col in row:
+            sum += int(col)
+        if sum == -5:   return True
     return False
 
+# see if a board has a winning column by computing the sum of each
+# colum, if any sum is -5, then all the entries have been marked off
+def winCol(board):
+    for i in range(5):
+        sum = 0
+        for row in board:
+            sum += int(row[i])
+        if sum == -5:   return True
+    return False
+
+
+def hasWin(board):
+    return winRow(board) or winCol(board)
+
+# sum each entry of of the board, unless said entry is '-1'
 def calculateRemaining(board):
     sum = 0
     for row in board:
@@ -52,20 +57,16 @@ def drawNumbers(order, boards):
         for board in boards:
             for row in board:
                 if num in row:
+                    # update number in board to indicate that it has been found
                     row[row.index(num)] = '-1'
                 if hasWin(board):
                     sum = calculateRemaining(board)
                     return sum, num
-        if int(num) == 24:
-            print(boards)
     print("No winner found")
     return 0, 0
 
 if __name__ == "__main__":
     order, boards = parseInput()
-    for b in boards:
-        print(b)
-        print()
     sum, num = drawNumbers(order, boards)
     if sum != 0 and num != 0:
         print("Winning number:", num)
