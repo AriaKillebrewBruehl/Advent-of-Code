@@ -16,14 +16,9 @@ def parseInput():
             if maxY < max(y0, y1):  maxY = max(y0, y1)
             pairs.append([[x0, y0], [x1, y1]])
     grid = [[0 for i in range(maxX + 1)] for j in range(maxY + 1)]
-    print(maxX, maxY)
-    print("number of rows:", len(grid))
-    print("number of columns:", len(grid[0]))
     return pairs, grid
 
 def mark(positions, grid):
-    print("number of rows:", len(grid))
-    print("number of columns:", len(grid[0]))
     for pos in positions:
         # same y-coordinate, so mark all x-cooridantes in the range
         if pos[0][1] == pos[1][1]:
