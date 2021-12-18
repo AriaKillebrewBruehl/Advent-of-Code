@@ -1,8 +1,11 @@
 def parseInput():
     f = open('testInput.txt', 'r')
-    days = 256
-    fish = [[int(i), days] for i in f.read().split(',')]
-    return fish
+    counts = [0]*8
+    for i in f.readlines():
+        counts[i] += 1
+    # days = 256
+    # fish = [[int(i), days] for i in f.read().split(',')]
+    return counts
 
 def getTotalChildren(fish):
     currentDay = fish[0]
@@ -18,7 +21,7 @@ def getTotalChildren(fish):
                 total += getTotalChildren([8, childSpawnDays])
     return total
 
-def getCounts(fish, days):
+def getCounts(fish):
     total = 0
     for i in range(len(fish)):
         spawnDays = fish[i][1] - fish[i][0]
@@ -31,4 +34,4 @@ def getCounts(fish, days):
 
 if __name__ == "__main__":
     fish = parseInput()
-    print(getCounts(fish, 256))
+    print(getCounts(fish ))
