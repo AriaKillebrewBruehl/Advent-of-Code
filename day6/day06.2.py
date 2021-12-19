@@ -45,4 +45,4 @@ def arrayCounts(counts, days):
 
 if __name__ == "__main__":
     fish, counts = parseInput()
-    print(getCounts(counts))
+    print(arrayCounts(counts, 256))
