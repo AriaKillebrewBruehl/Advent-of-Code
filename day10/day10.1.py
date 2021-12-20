@@ -1,5 +1,5 @@
 def parseInput():
-    f = open('input.txt', 'r')
+    f = open('testInput.txt', 'r')
     lines = [l.strip() for l in f.readlines()]
     return lines
 
