@@ -1,5 +1,5 @@
 def parseInput():
-    f = open('input.txt', 'r')
+    f = open('testInput.txt', 'r')
     grid = [[int(digit) for digit in l.strip()] for l in f.readlines()]
     return grid
 
@@ -55,6 +55,7 @@ def flashNeighbors(grid, r, c, flashed):
             flashed += [[i, j]]
 
 def step(grid):
+    goal = len(grid) * len(grid[0])
     toFlash = incrementAll(grid)
     flashed = []
     for f in toFlash:
@@ -62,17 +63,20 @@ def step(grid):
         flashNeighbors(grid, f[0], f[1], flashed)
     for f in flashed:
         grid[f[0]][f[1]] = 0
-    return len(flashed)
+    if len(flashed) == goal:
+        return True
+    else:                                           return False
 
 
-def getFlashes(grid, steps):
-    total = 0
-    for i in range(steps):
-        total += step(grid)
-    return total
+def getFlashes(grid):
+    i = 0
+    while True:
+        i += 1
+        if step(grid):
+            return i
 
 if __name__ == '__main__':
     grid = parseInput()
-    total = getFlashes(grid, 100)
-    print(total)
+    step = getFlashes(grid)
+    print(step)
 
