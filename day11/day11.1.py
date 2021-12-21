@@ -4,9 +4,13 @@ def parseInput():
     return grid
 
 def incrementAll(grid):
+    toFlash = []
     for r in range(len(grid)):
         for c in range(len(grid[r])):
             grid[r][c] += 1
+            if grid[r][c] >= 9:
+                toFlash += [[r, c]]
+    return toFlash
 
 def getNeighbors(grid, r, c):
     # a b c
@@ -40,39 +44,41 @@ def getNeighbors(grid, r, c):
 
     return positions
 
-def flashNeighbors(grid, r, c):
+def flashNeighbors(grid, r, c, flashed):
     neighbors = getNeighbors(grid, r, c)
 
     for n in neighbors:
         i, j = neighbors[n][0], neighbors[n][1]
         grid[i][j] += 1
         if grid[i][j] == 9:
-            flashNeighbors(grid, i, j)
-            grid[i][j] = 0
+            flashNeighbors(grid, i, j, flashed)
+            flashed += [[i, j]]
 
 def step(grid):
-    incrementAll(grid)
-    toFlash = []
-    for r in range(len(grid)):
-        for c in range(len(grid[r])):
-            if grid[r][c] >= 9:
-                toFlash += [[r, c]]
+    toFlash = incrementAll(grid)
+    flashed = []
     for f in toFlash:
-        flashNeighbors(grid, f[0], f[1])
-    for f in toFlash:
+        flashed += [f]
+        flashNeighbors(grid, f[0], f[1], flashed)
+    for f in flashed:
         grid[f[0]][f[1]] = 0
+    return len(flashed)
 
 
 def getFlashes(grid, steps):
+    total = 0
     for i in range(steps):
-        step(grid)
+        total += step(grid)
+    return total
 
 if __name__ == '__main__':
     grid = parseInput()
     for r in grid:
         print(r)
     print()
-    getFlashes(grid, 1)
+    total = getFlashes(grid, 2)
     for r in grid:
         print(r)
+    print()
+    print(total)
 
