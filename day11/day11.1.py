@@ -1,5 +1,5 @@
 def parseInput():
-    f = open('testInput.txt', 'r')
+    f = open('input.txt', 'r')
     grid = [[int(digit) for digit in l.strip()] for l in f.readlines()]
     return grid
 
@@ -73,12 +73,6 @@ def getFlashes(grid, steps):
 
 if __name__ == '__main__':
     grid = parseInput()
-    for r in grid:
-        print(r)
-    print()
     total = getFlashes(grid, 100)
-    for r in grid:
-        print(r)
-    print()
     print(total)
 
