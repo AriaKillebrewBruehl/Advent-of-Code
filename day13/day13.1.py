@@ -8,7 +8,7 @@ def parseInput():
         if 'fold' in l:
             fold = l.strip().split(' ')
             plane, pos = fold[2].split('=')
-            instructions += [[plane, pos]]
+            instructions += [[plane, int(pos)]]
         elif l.isspace(): continue
         else:
             x, y = l.strip().split(',')
@@ -16,8 +16,7 @@ def parseInput():
             if x > maxX:    maxX = x
             if y > maxY:    maxY = y
             dots += [[x, y]]
-    grid = [['.' for i in range(maxX)] for j in range(maxY)]
-    print(maxX, maxY)
+    grid = [['.' for i in range(maxX + 1)] for j in range(maxY + 1)]
     return dots, instructions, grid
 
 def markPaper(dots, grid):
@@ -25,17 +24,21 @@ def markPaper(dots, grid):
         x, y = d[0], d[1]
         grid[y][x] = '#'
 
-def singleFold(grid, instructions):
+def singleFold(dots, instructions):
     fold = instructions[0]
     if fold[0] == 'x':
         line = fold[1]
     else:
         line = fold[1]
-        newGrid = [grid[i] for i in range(line)]
-        for i in range(line + 1, len(grid)):
-            for j in grid[i]:
-                newGrid[line - 1 - i][j] = grid[i][j]
-    return newGrid
+        for d in dots:
+            if d[1] > line:
+                dist = d[1] - line
+                newY = line - dist
+                newPos = [d[0], newY]
+                dots.remove(d)
+                if newPos not in dots:
+                    dots.append(d)
+    return
 
 def countMarks(grid):
     total = 0
@@ -47,8 +50,9 @@ def countMarks(grid):
 
 if __name__ == "__main__":
     dots, instructions, grid = parseInput()
+    markPaper(dots, grid)
     for g in grid:
         print(g)
-    markPaper(dots, grid)
-    folded = singleFold(grid)
-    print(countMarks(folded))
+    print()
+    singleFold(dots, instructions)
+    print(len(dots))
