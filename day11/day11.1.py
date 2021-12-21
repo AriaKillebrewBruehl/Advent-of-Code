@@ -52,11 +52,15 @@ def flashNeighbors(grid, r, c):
 
 def step(grid):
     incrementAll(grid)
+    toFlash = []
     for r in range(len(grid)):
         for c in range(len(grid[r])):
             if grid[r][c] >= 9:
-                flashNeighbors(grid, r, c)
-                grid[r][c] = 0
+                toFlash += [[r, c]]
+    for f in toFlash:
+        flashNeighbors(grid, f[0], f[1])
+    for f in toFlash:
+        grid[f[0]][f[1]] = 0
 
 
 def getFlashes(grid, steps):
