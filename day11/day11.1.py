@@ -1,5 +1,5 @@
 def parseInput():
-    f = open('tinyInput.txt', 'r')
+    f = open('testInput.txt', 'r')
     grid = [[int(digit) for digit in l.strip()] for l in f.readlines()]
     return grid
 
@@ -8,7 +8,7 @@ def incrementAll(grid):
     for r in range(len(grid)):
         for c in range(len(grid[r])):
             grid[r][c] += 1
-            if grid[r][c] >= 9:
+            if grid[r][c] > 9:
                 toFlash += [[r, c]]
     return toFlash
 
@@ -34,13 +34,13 @@ def getNeighbors(grid, r, c):
         positions.pop('g')
         positions.pop('h')
     if c == 0:
-        positions.pop('a')
+        if 'a' in positions:    positions.pop('a')
         positions.pop('d')
-        positions.pop('f')
+        if 'f' in positions:    positions.pop('f')
     elif c == len(grid[r]) - 1:
-        positions.pop('c')
+        if 'c' in positions:    positions.pop('c')
         positions.pop('e')
-        positions.pop('h')
+        if 'h' in positions:    positions.pop('h')
 
     return positions
 
@@ -50,7 +50,7 @@ def flashNeighbors(grid, r, c, flashed):
     for n in neighbors:
         i, j = neighbors[n][0], neighbors[n][1]
         grid[i][j] += 1
-        if grid[i][j] == 9:
+        if grid[i][j] > 9:
             flashNeighbors(grid, i, j, flashed)
             flashed += [[i, j]]
 
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     for r in grid:
         print(r)
     print()
-    total = getFlashes(grid, 2)
+    total = getFlashes(grid, 100)
     for r in grid:
         print(r)
     print()
