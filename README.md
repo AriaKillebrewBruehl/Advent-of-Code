@@ -9,7 +9,7 @@
 | 03                   | :star:     | :star:     |
 | 04                   | :star:     | :star:     |
 | 05                   | :star:     | :star:     |
-| 06                   | :star:     |            |
+| 06                   | :star:     | :star:     |
 | 07                   | :star:     |            |
 | 08                   | :star:     |            |
 | 09                   | :star:     |            |
