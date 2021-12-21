@@ -50,7 +50,7 @@ def flashNeighbors(grid, r, c, flashed):
     for n in neighbors:
         i, j = neighbors[n][0], neighbors[n][1]
         grid[i][j] += 1
-        if grid[i][j] > 9:
+        if grid[i][j] == 10:
             flashNeighbors(grid, i, j, flashed)
             flashed += [[i, j]]
 
