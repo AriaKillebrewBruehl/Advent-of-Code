@@ -42,8 +42,11 @@ def getBinary(inputImage, r, c):
     neighbors = getNeighbors(inputImage, r, c)
     binary = ''
     for n in neighbors:
-        i, j = neighbors[n][0], neighbors[n][1]
-        pixel = inputImage[i][j]
+        if neighbors[n] == '.':
+            pixel = '.'
+        else:
+            i, j = neighbors[n][0], neighbors[n][1]
+            pixel = inputImage[i][j]
         if pixel == '.':    binary += '0'
         else:               binary += '1'
     return binary
