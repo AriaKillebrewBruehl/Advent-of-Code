@@ -5,6 +5,13 @@ def parseInput():
     inputImage = [list(lines[i].strip()) for i in range(2, len(lines))]
     return enhanceAlg, inputImage
 
+def padImage(inputImage):
+    for r in inputImage:
+        r.insert(0, '.')
+        r.append('.')
+    darkRow = ['.' for i in range(len(inputImage[0]))]
+    inputImage.insert(0, darkRow)
+    input.append(darkRow)
 
 def getNeighbors(grid, r, c):
     # a b c
@@ -64,9 +71,7 @@ def enhanceImage(enhanceAlg, inputImage):
         j = 0
         while j < len(inputImage[i]):
             binary = getBinary(inputImage, i, j)
-            print(binary)
             newPixel = getNewPixel(enhanceAlg, binary)
-            print(newPixel)
             newRow.append(newPixel)
             j += 1
         newImage.append(newRow)
