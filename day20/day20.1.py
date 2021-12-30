@@ -20,21 +20,21 @@ def getNeighbors(grid, r, c):
                   'h' : [r+1, c+1],
     }
     if r == 0:
-        positions.pop('a')
-        positions.pop('b')
-        positions.pop('c')
+        positions['a'] = '.'
+        positions['b'] = '.'
+        positions['c'] = '.'
     elif r == len(grid) - 1:
-        positions.pop('f')
-        positions.pop('g')
-        positions.pop('h')
+        positions['f'] = '.'
+        positions['g'] = '.'
+        positions['h'] = '.'
     if c == 0:
-        if 'a' in positions:    positions.pop('a')
-        positions.pop('d')
-        if 'f' in positions:    positions.pop('f')
+        positions['a'] = '.'
+        positions['d'] = '.'
+        positions['f'] = '.'
     elif c == len(grid[r]) - 1:
-        if 'c' in positions:    positions.pop('c')
-        positions.pop('e')
-        if 'h' in positions:    positions.pop('h')
+        positions['c'] = '.'
+        positions['e'] = '.'
+        positions['h'] = '.'
 
     return positions
 
@@ -72,7 +72,7 @@ def enhanceImage(enhanceAlg, inputImage):
 
 def enhance(enhanceAlg, inputImage, times):
     for r in inputImage:
-        print(str(r))
+        print(''.join(r))
     print()
     if times == 0:  return inputImage
     else:           enhance(enhanceAlg, enhanceImage(enhanceAlg, inputImage), times - 1)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     enhanceAlg, inputImage = parseInput()
     newImage = enhance(enhanceAlg, inputImage, 2)
     for r in newImage:
-        print(str(r))
+        print(''.join(r))
     lit = countLit(newImage)
     print(lit)
 
