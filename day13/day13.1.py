@@ -15,22 +15,28 @@ def parseInput():
     return dots, instructions
 
 def singleFold(dots, instructions):
-    fold = instructions[0]
-    if fold[0] == 'x':
-        line = fold[1]
-    else:
-        line = fold[1]
+    plane, pos = instructions[0]
+    if plane == 'x':
         for d in dots:
-            if d[1] > line:
-                dist = d[1] - line
-                newY = line - dist
-                newPos = [d[0], newY]
+            if d[0] > pos:
+                dist = d[0] - pos
+                newPos = [pos - dist, d[1]]
                 dots.remove(d)
                 if newPos not in dots:
                     dots.append(d)
-    return
+    else:
+        for d in dots:
+            if d[1] > pos:
+                dist = d[1] - pos
+                newPos = [d[0], pos - dist]
+                dots.remove(d)
+                if newPos not in dots:
+                    dots.append(d)
 
 if __name__ == "__main__":
     dots, instructions = parseInput()
+    print(len(dots))
+    print(instructions)
     singleFold(dots, instructions)
+    print(len(dots))
     print(len(dots))
