@@ -1,8 +1,5 @@
-from typing import Counter
-
-
 def parseInput():
-    f = open('testInput.txt', 'r')
+    f = open('input.txt', 'r')
     lines = f.readlines()
     pos0 = lines[0].strip().split(' ')[-1]
     pos1 = lines[1].strip().split(' ')[-1]
@@ -36,7 +33,6 @@ def playGame(player0, player1, turn):
             if player1[0] == 0: player1[0] = 10
             player1[1] += player1[0]
         count += 1
-        print(player0, player1)
         return playGame(player0, player1, not turn) + 1
 
 def loosingScore(player0, player1):
