@@ -27,10 +27,10 @@ def playGame(player0, player1, turn):
         move = rollThree()
         if not turn:
             player0[0] = (player0[0] + move) % 11
-            player0[1] += move
+            player0[1] += player0[0]
         else:
             player1[0] = (player1[0] + move) % 11
-            player1[1] += move
+            player1[1] += player1[0]
         print(player0, player1)
         return playGame(player0, player1, not turn) + 1
 
