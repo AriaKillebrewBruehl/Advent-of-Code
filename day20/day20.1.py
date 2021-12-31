@@ -11,7 +11,7 @@ def padImage(inputImage):
         r.append('.')
     darkRow = ['.' for i in range(len(inputImage[0]))]
     inputImage.insert(0, darkRow)
-    input.append(darkRow)
+    inputImage.append(darkRow)
 
 def getNeighbors(grid, r, c):
     # a b c
@@ -54,6 +54,8 @@ def getBinary(inputImage, r, c):
         else:
             i, j = neighbors[n][0], neighbors[n][1]
             pixel = inputImage[i][j]
+        # i, j = neighbors[n][0], neighbors[n][1]
+        # pixel = inputImage[i][j]
         if pixel == '.':    binary += '0'
         else:               binary += '1'
     return binary
@@ -67,15 +69,26 @@ def enhanceImage(enhanceAlg, inputImage):
     newImage = []
     i = 0
     while i < len(inputImage):
+        if i == 0:
+            i += 1
+            continue
+        elif i == len(inputImage) - 1:
+            break
         newRow = []
         j = 0
         while j < len(inputImage[i]):
+            if j == 0:
+                j += 1
+                continue
+            elif j == len(inputImage[i]) - 1:
+                break
             binary = getBinary(inputImage, i, j)
             newPixel = getNewPixel(enhanceAlg, binary)
             newRow.append(newPixel)
             j += 1
         newImage.append(newRow)
         i += 1
+    padImage(newImage)
     return newImage
 
 def enhance(enhanceAlg, inputImage, times):
@@ -95,6 +108,7 @@ def countLit(inputImage):
 
 if __name__ == '__main__':
     enhanceAlg, inputImage = parseInput()
+    padImage(inputImage)
     newImage = enhance(enhanceAlg, inputImage, 2)
     for r in newImage:
         print(''.join(r))
