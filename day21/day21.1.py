@@ -2,12 +2,12 @@ from typing import Counter
 
 
 def parseInput():
-    f = open('input.txt', 'r')
+    f = open('testInput.txt', 'r')
     lines = f.readlines()
     pos0 = lines[0].strip().split(' ')[-1]
     pos1 = lines[1].strip().split(' ')[-1]
-    player0 = [pos0, 0]
-    player1 = [pos1, 0]
+    player0 = [int(pos0), 0]
+    player1 = [int(pos1), 0]
     return player0, player1
 
 roll = 0
@@ -26,12 +26,15 @@ def playGame(player0, player1, turn):
     else:
         move = rollThree()
         if not turn:
-            player0[0] = (player0[0] + move) % 10
+            player0[0] = (player0[0] + move) % 11
             player0[1] += move
         else:
-            player1[0] = (player1[0] + move) % 10
+            player1[0] = (player1[0] + move) % 11
             player1[1] += move
+        print(player0, player1)
         return playGame(player0, player1, not turn) + 1
 
 if __name__ == '__main__':
     player0, player1 = parseInput()
+    print(player0, player1)
+    print(playGame(player0, player1, 0))
