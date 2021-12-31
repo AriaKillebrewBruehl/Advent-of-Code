@@ -17,7 +17,6 @@ def rollThree():
     r1, r2, r3 = deterministicDie(), deterministicDie(), deterministicDie()
     return r1 + r2 + r3
 
-count = 0
 def playGame(player0, player1, turn):
     global count
     if player0[1] >= 1000 or player1[1] >= 1000:
@@ -32,7 +31,6 @@ def playGame(player0, player1, turn):
             player1[0] = (player1[0] + move) % 10
             if player1[0] == 0: player1[0] = 10
             player1[1] += player1[0]
-        count += 1
         return playGame(player0, player1, not turn) + 1
 
 def loosingScore(player0, player1):
