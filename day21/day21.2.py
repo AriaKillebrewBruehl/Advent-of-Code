@@ -5,35 +5,36 @@ def parseInput():
     pos1 = lines[1].strip().split(' ')[-1]
     player0 = [int(pos0), 0]
     player1 = [int(pos1), 0]
-    return player0, player1
+    return [[player0, player1]]
 
-roll = 0
-def deterministicDie():
-    global roll
-    roll += 1
-    return roll % 100
+def splits(universe, turn):
+    newUniverses = []
+    foundWinner = False
+    for i in range(1, 4):
+        pos = universe[turn][0] + i % 10
+        if pos == 0:    pos = 10
+        score = universe[turn][1] + i
+        if not turn:    newUniverse = [[pos, score], universe[not turn]]
+        else:           newUniverse = [universe[not turn], [pos, score]]
+        newUniverses += [newUniverse]
+        if score >= 21: foundWinner = True
+    return newUniverses, foundWinner
 
-def rollThree():
-    r1, r2, r3 = deterministicDie(), deterministicDie(), deterministicDie()
-    return r1 + r2 + r3
+def gameStep(universes, turn, newUniverses):
+    for i in range(len(universes) - newUniverses, len(universes)):
+        universe = universes[i]
+        unis, foundWinner = splits(universe, turn)
+        universes += [unis]
+        if foundWinner: return 0, True
+        else:           return len(unis), False
 
-count = 0
-def playGame(player0, player1, turn):
-    global count
-    if player0[1] >= 1000 or player1[1] >= 1000:
-        return 0
-    else:
-        move = rollThree()
-        if not turn:
-            player0[0] = (player0[0] + move) % 10
-            if player0[0] == 0: player0[0] = 10
-            player0[1] += player0[0]
-        else:
-            player1[0] = (player1[0] + move) % 10
-            if player1[0] == 0: player1[0] = 10
-            player1[1] += player1[0]
-        count += 1
-        return playGame(player0, player1, not turn) + 1
+def playGame(universes):
+    turn = 0
+    newUnis, foundWinner = gameStep(universes, turn, 1)
+    while not foundWinner:
+        newUnis, foundWinner = gameStep(universes, not turn, newUnis)
+
+
 
 def loosingScore(player0, player1):
     count = playGame(player0, player1, 0) * 3
@@ -41,7 +42,7 @@ def loosingScore(player0, player1):
     else:                   return count * player0[1]
 
 if __name__ == '__main__':
-    player0, player1 = parseInput()
+    universe = parseInput()
     print(loosingScore(player0, player1))
 
 
